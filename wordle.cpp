@@ -31,6 +31,11 @@ std::set<std::string> wordle(
 // Define any helper functions here
 void backtrack(string current, int idx, string floating, const set<string>& dict, set<string>& results) {
 	int n = current.size();
+	if(idx>0) {
+		string prefix = current.substr(0,idx);
+		auto it = dict.lower_bound(prefix);
+		if(it == dict.end() || it->compare(0,prefix.size(),prefix) != 0) return;
+	}
 	if(idx==n) {
 		if(floating.empty() && dict.find(current) != dict.end()) results.insert(current);
 		return;
